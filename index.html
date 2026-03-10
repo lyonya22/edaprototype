@@ -6,156 +6,131 @@
     <title>FoodExpress - Доставка еды</title>
 
     <style>
-        html {
-            scroll-behavior: smooth;
+        :root {
+            --primary: #ff6b00;
+            --primary-hover: #ff8c2f;
+            --bg: #0f0f0f;
+            --card-bg: #1c1c1c;
         }
+
+        html { scroll-behavior: smooth; }
 
         body {
             margin: 0;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: #0f0f0f;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
             color: white;
-            overflow-x: hidden; /* Чтобы бургер не создавал полосу прокрутки */
+            overflow-x: hidden;
         }
+
+        /* АНИМАЦИИ */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-card { animation: fadeUp 0.5s ease forwards; }
 
         /* HEADER */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 80px;
-            background: rgba(21, 21, 21, 0.95);
+            padding: 15px 5%;
+            background: rgba(21, 21, 21, 0.9);
             position: sticky;
             top: 0;
             z-index: 1000;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid #222;
         }
 
-        .logo {
-            font-size: 26px;
-            font-weight: 900;
-            color: #ff6b00;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+        .logo { font-size: 24px; font-weight: 900; color: var(--primary); text-transform: uppercase; }
 
-        nav a {
-            margin-left: 30px;
-            text-decoration: none;
-            color: white;
-            opacity: 0.7;
-            transition: 0.3s;
-            font-weight: 500;
-        }
+        nav { display: flex; gap: 20px; }
+        nav a { text-decoration: none; color: white; opacity: 0.7; font-weight: 500; transition: 0.3s; }
+        nav a:hover { opacity: 1; color: var(--primary); }
 
-        nav a:hover {
-            opacity: 1;
-            color: #ff6b00;
-        }
-
-        .cart {
-            background: #1c1c1c;
-            padding: 10px 20px;
+        .cart-btn {
+            background: var(--card-bg);
+            padding: 10px 18px;
             border-radius: 30px;
-            font-size: 14px;
+            cursor: pointer;
             border: 1px solid #333;
+            transition: 0.3s;
         }
+        .cart-btn:hover { background: #252525; border-color: var(--primary); }
 
-        /* HERO SECTION - Тот самый эффект со скрина */
+        /* HERO */
         .hero {
             position: relative;
-            height: 600px;
+            height: 550px;
             display: flex;
             align-items: center;
-            padding: 0 10%;
-            background: #0f0f0f;
-            margin-bottom: 50px;
-        }
-
-        .hero-content {
-            flex: 1;
-            z-index: 2;
+            justify-content: center;
+            text-align: center;
+            padding: 0 20px;
         }
 
         .hero h1 {
-            font-size: 120px;
+            font-size: clamp(50px, 15vw, 130px);
             margin: 0;
-            line-height: 0.8;
-            opacity: 0.15;
+            opacity: 0.1;
             font-weight: 900;
             position: absolute;
-            left: 50%;
-            top: 45%;
-            transform: translate(-50%, -50%);
             width: 100%;
-            text-align: center;
-            pointer-events: none;
-            white-space: nowrap;
+            z-index: 1;
         }
 
         .hero p {
-            font-size: 18px;
-            max-width: 500px;
-            line-height: 1.6;
-            opacity: 0.9;
-            margin: 0 auto;
-            text-align: center;
             position: relative;
             z-index: 10;
+            font-size: clamp(16px, 4vw, 20px);
+            max-width: 600px;
+            line-height: 1.6;
+            margin-top: 80px;
         }
 
         .hero-burger {
             position: absolute;
-            width: 550px;
-            right: -50px; /* Вылазит за край */
-            bottom: -80px; /* Вылазит вниз */
+            width: clamp(300px, 45vw, 550px);
+            right: 5%;
+            bottom: -60px;
             z-index: 5;
-            filter: drop-shadow(0 30px 50px rgba(0,0,0,0.8));
-            transition: transform 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+            filter: drop-shadow(0 30px 60px rgba(0,0,0,0.9));
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             pointer-events: none;
         }
 
-        .hero:hover .hero-burger {
-            transform: scale(1.05) rotate(-3deg) translateY(-20px);
-        }
+        .hero:hover .hero-burger { transform: translateY(-20px) rotate(-3deg) scale(1.05); }
 
         /* MENU */
-        .menu {
-            padding: 80px 40px;
-            max-width: 1200px;
-            margin: auto;
-        }
-
-        .menu h2 {
-            text-align: center;
-            font-size: 32px;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-        }
+        .menu { padding: 80px 5%; max-width: 1200px; margin: auto; }
+        .menu h2 { text-align: center; font-size: 32px; margin-bottom: 40px; }
 
         .categories {
-            text-align: center;
-            margin-bottom: 50px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 40px;
+            overflow-x: auto;
+            padding-bottom: 10px;
         }
+        .categories::-webkit-scrollbar { display: none; }
 
         .categories button {
-            margin: 5px;
-            padding: 12px 25px;
+            padding: 12px 24px;
             border: none;
             border-radius: 30px;
-            background: #1c1c1c;
+            background: var(--card-bg);
             color: white;
             cursor: pointer;
-            transition: 0.3s;
             font-weight: 600;
+            white-space: nowrap;
         }
+        .categories button.active { background: var(--primary); box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3); }
 
-        .categories button:hover, .categories button.active {
-            background: #ff6b00;
-            box-shadow: 0 5px 15px rgba(255, 107, 0, 0.3);
-        }
-
-        /* GRID FIXED */
+        /* GRID */
         .food-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -163,122 +138,90 @@
         }
 
         .card {
-            background: #1c1c1c;
+            background: var(--card-bg);
             border-radius: 20px;
             overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex; /* Важно для нормального отображения */
-            flex-direction: column;
-        }
-
-        .card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            transition: 0.5s;
-        }
-
-        .card:hover {
-            transform: translateY(-15px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-        }
-
-        .card:hover img {
-            transform: scale(1.1);
-        }
-
-        .card-body {
-            padding: 20px;
-            flex-grow: 1;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            transition: 0.4s;
         }
-
-        .food-title {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .price {
-            color: #ff6b00;
-            font-size: 18px;
-            font-weight: 800;
-            margin-bottom: 15px;
-        }
-
+        .card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        .card img { width: 100%; height: 200px; object-fit: cover; }
+        .card-body { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
+        .price { color: var(--primary); font-size: 22px; font-weight: 800; margin: 15px 0; }
+        
         .order-btn {
-            width: 100%;
-            padding: 12px;
+            padding: 14px;
             border: none;
             border-radius: 12px;
-            background: #ff6b00;
+            background: var(--primary);
             color: white;
             font-weight: bold;
             cursor: pointer;
             transition: 0.3s;
         }
+        .order-btn:hover { background: var(--primary-hover); }
 
-        .order-btn:hover {
-            background: #ff8c2f;
-            transform: scale(1.02);
-        }
-
-        /* ABOUT - Обновленный стиль */
+        /* ABOUT - Мягкий цвет */
         .about {
-            padding: 120px 40px;
+            padding: 100px 10%;
             text-align: center;
-            background: linear-gradient(135deg, #ff6b00 0%, #ff2d55 100%);
-            position: relative;
-            margin-top: 50px;
+            background: linear-gradient(180deg, #1a1a1a 0%, #2b1a0f 100%);
+            border-top: 1px solid #333;
         }
+        .about h2 { font-size: 40px; color: var(--primary); }
+        .about p { max-width: 800px; margin: 20px auto; font-size: 19px; line-height: 1.8; opacity: 0.9; }
 
-        .about h2 {
-            font-size: 48px;
-            margin-bottom: 25px;
-            font-weight: 800;
+        /* MODAL КОРЗИНА */
+        .modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            backdrop-filter: blur(5px);
         }
-
-        .about p {
-            max-width: 800px;
-            margin: auto;
-            font-size: 20px;
-            line-height: 1.8;
-            font-weight: 400;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-
-        /* CONTACT */
-        .contact {
-            padding: 80px 40px;
-            text-align: center;
-            background: #0a0a0a;
-        }
-
-        .contact h2 { margin-bottom: 30px; }
-
-        .contact p {
-            font-size: 18px;
-            margin: 15px 0;
-            opacity: 0.8;
-        }
-
-        .contact a {
-            color: #ff6b00;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        footer {
-            text-align: center;
+        .modal-content {
+            background: #151515;
             padding: 30px;
-            background: #0a0a0a;
-            border-top: 1px solid #222;
-            font-size: 14px;
-            opacity: 0.6;
+            border-radius: 24px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #333;
+        }
+        .remove-item { color: #ff4444; cursor: pointer; font-size: 12px; }
+        .pay-btn {
+            width: 100%;
+            padding: 15px;
+            margin-top: 20px;
+            background: #4CAF50;
+            border: none;
+            color: white;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
         }
 
+        /* АДАПТИВНОСТЬ */
+        @media (max-width: 768px) {
+            header { padding: 15px 20px; }
+            nav { display: none; }
+            .hero-burger { position: relative; right: 0; bottom: 0; width: 280px; margin-top: 20px; }
+            .hero { height: auto; padding: 100px 20px 50px; }
+            .hero h1 { top: 10%; }
+            .food-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 
@@ -291,20 +234,14 @@
         <a href="#about">О нас</a>
         <a href="#contact">Контакты</a>
     </nav>
-    <div class="cart">
+    <div class="cart-btn" onclick="toggleModal()">
         🛒 <span id="cart-count">0</span> | <span id="cart-total">0 ₸</span>
     </div>
 </header>
 
 <section class="hero">
-    <div class="hero-content">
-        <h1>KING BURGER</h1>
-        <p>
-            Сочная говяжья котлета 180г, плавленый сыр чеддер, 
-            свежий салат, томаты, карамелизированный лук 
-            и фирменный соус FoodExpress.
-        </p>
-    </div>
+    <h1>KING BURGER</h1>
+    <p>Сочная говяжья котлета 180г, плавленый сыр чеддер, свежий салат и фирменный соус FoodExpress.</p>
     <img class="hero-burger" src="https://pngimg.com/uploads/burger_sandwich/burger_sandwich_PNG4135.png" alt="Burger">
 </section>
 
@@ -318,131 +255,146 @@
         <button onclick="filterFood('drink', this)">Напитки</button>
     </div>
 
-    <div class="food-grid">
-        <div class="card" data-category="burger">
+    <div class="food-grid" id="food-grid">
+        <div class="card animate-card" data-category="burger">
             <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500">
             <div class="card-body">
                 <div class="food-title">King Beef</div>
                 <div class="price">1500 ₸</div>
-                <button class="order-btn" onclick="order('King Beef',1500)">Заказать</button>
+                <button class="order-btn" onclick="addToCart('King Beef', 1500)">Заказать</button>
             </div>
         </div>
-
-        <div class="card" data-category="burger">
+        <div class="card animate-card" data-category="burger">
             <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?w=500">
             <div class="card-body">
                 <div class="food-title">Cheese Burger</div>
                 <div class="price">1600 ₸</div>
-                <button class="order-btn" onclick="order('Cheese Burger',1600)">Заказать</button>
+                <button class="order-btn" onclick="addToCart('Cheese Burger', 1600)">Заказать</button>
             </div>
         </div>
-
-        <div class="card" data-category="pizza">
+        <div class="card animate-card" data-category="pizza">
             <img src="https://images.unsplash.com/photo-1574071318508-1cdbad80ad50?w=500">
             <div class="card-body">
                 <div class="food-title">Маргарита</div>
                 <div class="price">2500 ₸</div>
-                <button class="order-btn" onclick="order('Маргарита',2500)">Заказать</button>
+                <button class="order-btn" onclick="addToCart('Маргарита', 2500)">Заказать</button>
             </div>
         </div>
-
-        <div class="card" data-category="pizza">
-            <img src="https://images.unsplash.com/photo-1628840042765-356cda07504e?w=500">
-            <div class="card-body">
-                <div class="food-title">Пепперони</div>
-                <div class="price">2700 ₸</div>
-                <button class="order-btn" onclick="order('Пепперони',2700)">Заказать</button>
-            </div>
-        </div>
-
-        <div class="card" data-category="sushi">
-            <img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=500">
-            <div class="card-body">
-                <div class="food-title">Филадельфия</div>
-                <div class="price">3000 ₸</div>
-                <button class="order-btn" onclick="order('Филадельфия',3000)">Заказать</button>
-            </div>
-        </div>
-
-        <div class="card" data-category="sushi">
-            <img src="https://images.unsplash.com/photo-1559700015-8d440958544e?w=500">
-            <div class="card-body">
-                <div class="food-title">Калифорния</div>
-                <div class="price">3200 ₸</div>
-                <button class="order-btn" onclick="order('Калифорния',3200)">Заказать</button>
-            </div>
-        </div>
-
-        <div class="card" data-category="drink">
-            <img src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=500">
-            <div class="card-body">
-                <div class="food-title">Мохито</div>
-                <div class="price">800 ₸</div>
-                <button class="order-btn" onclick="order('Мохито',800)">Заказать</button>
-            </div>
-        </div>
-
-        <div class="card" data-category="drink">
+        <div class="card animate-card" data-category="drink">
             <img src="https://images.unsplash.com/photo-1543253687-c931c8e01820?w=500">
             <div class="card-body">
                 <div class="food-title">Кола-Cola</div>
                 <div class="price">500 ₸</div>
-                <button class="order-btn" onclick="order('Кола-Cola',500)">Заказать</button>
+                <button class="order-btn" onclick="addToCart('Кола-Cola', 500)">Заказать</button>
             </div>
         </div>
     </div>
 </section>
 
 <section class="about" id="about">
-    <h2>О нас</h2>
+    <h2>Наша история</h2>
     <p>
-        FoodExpress — это не просто доставка, это страсть к качественной еде. 
-        Мы используем только отборную говядину, свежайшие овощи и авторские соусы. 
-        Наша цель — доставить вам гастрономическое удовольствие всего за 30 минут. 
-        Профессиональная команда поваров готовит каждое блюдо с любовью специально для вас!
+        Мы начинали как маленькая кухня, одержимая идеей идеального бургера. Сегодня FoodExpress — это символ качества и скорости. Мы не просто доставляем еду, мы дарим время для общения с близкими, пока наши повара создают шедевры из фермерских продуктов.
     </p>
 </section>
 
-<section class="contact" id="contact">
-    <h2>Связаться с нами</h2>
-    <p>Instagram: <a href="#">@foodexpress</a></p>
+<section class="contact" id="contact" style="padding: 60px 20px; text-align: center; background: #0a0a0a;">
+    <h2>Контакты</h2>
     <p>Телефон: +7 707 167 1932</p>
     <p>Email: info@foodexpress.kz</p>
 </section>
 
+<div class="modal" id="cartModal" onclick="if(event.target == this) toggleModal()">
+    <div class="modal-content">
+        <h3 style="margin-top: 0;">Ваш заказ</h3>
+        <div id="cart-items-list">
+            </div>
+        <div style="margin-top: 20px; border-top: 1px solid #444; padding-top: 10px;">
+            <strong>Итого: <span id="modal-total">0</span> ₸</strong>
+        </div>
+        
+        <h4 style="margin-bottom: 10px;">Способ оплаты:</h4>
+        <select id="pay-method" style="width: 100%; padding: 10px; border-radius: 8px; background: #222; color: white; border: 1px solid #444;">
+            <option value="card">Картой курьеру</option>
+            <option value="cash">Наличными</option>
+            <option value="online">Онлайн оплата (Kaspi)</option>
+        </select>
+
+        <button class="pay-btn" onclick="processOrder()">Оформить заказ</button>
+        <button style="width:100%; background:none; border:none; color:#777; margin-top:10px; cursor:pointer;" onclick="toggleModal()">Закрыть</button>
+    </div>
+</div>
+
 <footer>
-    © 2026 FoodExpress. Все права защищены.
+    <center style="padding: 20px; opacity: 0.5;">© 2026 FoodExpress. Все права защищены.</center>
 </footer>
 
 <script>
     let cart = [];
 
-    function order(food, price) {
-        cart.push({name: food, price: price});
-        updateCart();
-        // Небольшая анимация кнопки при нажатии
-        event.target.innerText = "В корзине! ✓";
+    function addToCart(name, price) {
+        cart.push({ id: Date.now(), name, price });
+        updateCartUI();
+        
+        // Анимация кнопки
+        let btn = event.target;
+        btn.innerText = "Добавлено! ✓";
+        btn.style.background = "#4CAF50";
         setTimeout(() => {
-            event.target.innerText = "Заказать";
-        }, 1000);
+            btn.innerText = "Заказать";
+            btn.style.background = "#ff6b00";
+        }, 800);
     }
 
-    function updateCart() {
-        let total = 0;
-        cart.forEach(item => total += item.price);
+    function removeFromCart(id) {
+        cart = cart.filter(item => item.id !== id);
+        updateCartUI();
+    }
+
+    function updateCartUI() {
+        let total = cart.reduce((sum, item) => sum + item.price, 0);
         document.getElementById("cart-count").innerText = cart.length;
         document.getElementById("cart-total").innerText = total + " ₸";
+        document.getElementById("modal-total").innerText = total;
+
+        const list = document.getElementById("cart-items-list");
+        list.innerHTML = cart.length === 0 ? "<p style='color:#777;'>Корзина пуста</p>" : "";
+        
+        cart.forEach(item => {
+            list.innerHTML += `
+                <div class="cart-item">
+                    <span>${item.name}</span>
+                    <span>${item.price} ₸ <span class="remove-item" onclick="removeFromCart(${item.id})">✕</span></span>
+                </div>
+            `;
+        });
+    }
+
+    function toggleModal() {
+        const modal = document.getElementById("cartModal");
+        modal.style.display = modal.style.display === "flex" ? "none" : "flex";
+    }
+
+    function processOrder() {
+        if(cart.length === 0) return alert("Добавьте что-нибудь в корзину!");
+        
+        const method = document.getElementById("pay-method").value;
+        alert(`Заказ принят! Способ оплаты: ${method}. Мы перезвоним вам в течение 5 минут.`);
+        cart = [];
+        updateCartUI();
+        toggleModal();
     }
 
     function filterFood(category, btn) {
-        // Управление активной кнопкой
         document.querySelectorAll('.categories button').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
 
-        let cards = document.querySelectorAll(".card");
+        const cards = document.querySelectorAll(".card");
         cards.forEach(card => {
+            card.classList.remove('animate-card');
             if (category === "all" || card.dataset.category === category) {
-                card.style.display = "flex"; // Возвращаем flex для корректной сетки
+                card.style.display = "flex";
+                setTimeout(() => card.classList.add('animate-card'), 10);
             } else {
                 card.style.display = "none";
             }
