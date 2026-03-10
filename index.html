@@ -4,500 +4,241 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FoodExpress - Доставка еды</title>
-<style>
-body{
-    margin:0;
-    font-family: Arial, sans-serif;
-    background:#0f0f0f;
-    color:white;
-}
-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:20px 40px;
-    background:#151515;
-    flex-wrap: wrap;
-}
-.logo{
-    font-size:24px;
-    font-weight:bold;
-    color:#ff6b00;
-}
-nav{
-    display:flex;
-    align-items:center;
-}
-nav a{
-    margin-left:20px;
-    text-decoration:none;
-    color:white;
-    opacity:0.8;
-}
-nav a:hover{
-    opacity:1;
-}
-.cart{
-    background:#1c1c1c;
-    padding:8px 15px;
-    border-radius:20px;
-    font-size:14px;
-    margin-left:20px;
-}
-.hero{
-    position:relative;
-    text-align:center;
-    color:white;
-    height:450px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGJ1cmdlcnxlbnwwfHwwfHx8MA%3D%3D') center/cover no-repeat;
-}
-.hero h1{
-    font-size:50px;
-    margin-bottom:10px;
-}
-.hero p{
-    font-size:20px;
-}
-.menu{
-    padding:60px 40px;
-}
-.menu h2{
-    text-align:center;
-    margin-bottom:20px;
-}
-.categories{
-    text-align:center;
-    margin-bottom:30px;
-}
-.categories button{
-    margin:5px;
-    padding:10px 20px;
-    border:none;
-    border-radius:20px;
-    background:#1c1c1c;
-    color:white;
-    cursor:pointer;
-}
-.categories button:hover{
-    background:#ff6b00;
-}
-.food-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:25px;
-}
-.card{
-    background:#1c1c1c;
-    border-radius:15px;
-    overflow:hidden;
-    transition:0.3s;
-}
-.card:hover{
-    transform:translateY(-8px);
-    box-shadow:0 10px 25px rgba(0,0,0,0.5);
-}
-.card img{
-    width:100%;
-    height:160px;
-    object-fit:cover;
-}
-.card-body{
-    padding:15px;
-}
-.food-title{
-    font-size:18px;
-    margin-bottom:10px;
-}
-.price{
-    color:#ff6b00;
-    font-weight:bold;
-}
-button{
-    margin-top:10px;
-    width:100%;
-    padding:10px;
-    border:none;
-    border-radius:8px;
-    background:#ff6b00;
-    color:white;
-    cursor:pointer;
-}
-button:hover{
-    background:#ff8c2f;
-}
-.about, .contact{
-    padding:60px 40px;
-    text-align:center;
-}
-.about h2, .contact h2{
-    margin-bottom:20px;
-}
-.footer{
-    text-align:center;
-    padding:20px;
-    background:#151515;
-    margin-top:40px;
-}
-@media(max-width:600px){
-    header{
-        flex-direction:column;
-        align-items:flex-start;
-    }
-    nav{
-        margin-top:10px;
-        flex-wrap:wrap;
-    }
-    .cart{
-        margin-left:0;
-        margin-top:10px;
-    }
-}
-</style>
-</head>
-<body>
-
-<header>
-<div class="logo">FoodExpress</div>
-<nav>
-<a href="#menu">Меню</a>
-<a href="#about">О нас</a>
-<a href="#contact">Контакты</a>
-</nav>
-<div class="cart">🛒 <span id="cart-count">0</span> | <span id="cart-total">0 ₸</span></div>
-</header>
-
-<!-- Главная плашка с крупным блюдом -->
-<section class="hero">
-<div>
-<h1>Бургер "King Beef"</h1>
-<p>Сочная говяжья котлета, свежие овощи, фирменный соус и хрустящая булка. Идеально для обеда или ужина!</p>
-</div>
-</section>
-
-<!-- Меню -->
-<section class="menu" id="menu">
-<h2>Наше меню</h2>
-<div class="categories">
-<button onclick="filterFood('all')">Все</button>
-<button onclick="filterFood('pizza')">Пицца</button>
-<button onclick="filterFood('burger')">Бургеры</button>
-<button onclick="filterFood('sushi')">Суши</button>
-<button onclick="filterFood('drink')">Напитки</button>
-</div>
-
-<div class="food-grid">
-<!-- Бургеры -->
-<div class="card" data-category="burger">
-<img src="hhttps://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGJ1cmdlcnxlbnwwfHwwfHx8MA%3D%3D">
-<div class="card-body">
-<div class="food-title">Бургер "King Beef"</div>
-<div class="price">1500</div>
-<button onclick="order('Бургер King Beef',1500)">Заказать</button>
-</div>
-</div>
-
-<div class="card" data-category="burger">
-<img src="https://images.unsplash.com/photo-1549611016-3a70d82b5040?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGJ1cmdlcnxlbnwwfHwwfHx8MA%3D%3D">
-<div class="card-body">
-<div class="food-title">Бургер "Cheese Lover"</div>
-<div class="price">1600</div>
-<button onclick="order('Бургер Cheese Lover',1600)">Заказать</button>
-</div>
-</div>
-
-<!-- Пицца -->
-<div class="card" data-category="pizza">
-<img src="https://images.unsplash.com/photo-1594007654729-407eedc4be65">
-<div class="card-body">
-<div class="food-title">Пицца "Маргарита"</div>
-<div class="price">2500</div>
-<button onclick="order('Пицца Маргарита',2500)">Заказать</button>
-</div>
-</div>
-
-<div class="card" data-category="pizza">
-<img src="https://images.unsplash.com/photo-1617196035154-1e7e6e28b0db?w=500&auto=format&fit=crop&q=60">
-<div class="card-body">
-<div class="food-title">Пицца "Пепперони"</div>
-<div class="price">2700</div>
-<button onclick="order('Пицца Пепперони',2700)">Заказать</button>
-</div>
-</div>
-
-<!-- Суши -->
-<div class="card" data-category="sushi">
-<img src="https://images.unsplash.com/photo-1635526910429-051cf1ed127e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjh8fHN1c2hpfGVufDB8fDB8fHww">
-<div class="card-body">
-<div class="food-title">Суши сет "Филадельфия"</div>
-<div class="price">3000</div>
-<button onclick="order('Суши Филадельфия',3000)">Заказать</button>
-</div>
-</div>
-
-<div class="card" data-category="sushi">
-<img src="https://images.unsplash.com/photo-1559410545-0bdcd187e0a6?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Q2FsaWZvcm5pYSUyMHJvbGx8ZW58MHx8MHx8fDA%3D">
-<div class="card-body">
-<div class="food-title">Суши сет "Калифорния"</div>
-<div class="price">3200</div>
-<button onclick="order('Суши Калифорния',3200)">Заказать</button>
-</div>
-</div>
-
-<!-- Напитки -->
-<div class="card" data-category="drink">
-<img src="https://images.unsplash.com/photo-1659046842567-2787b5c9c2fe?w=500&auto=format&fit=crop&q=60">
-<div class="card-body">
-<div class="food-title">Мохито</div>
-<div class="price">800</div>
-<button onclick="order('Мохито',800)">Заказать</button>
-</div>
-</div>
-
-<div class="card" data-category="drink">
-<img src="https://images.unsplash.com/photo-1692047013388-3182e2c5c77e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjh8fGxpbW9uYWRlfGVufDB8fDB8fHww">
-<div class="card-body">
-<div class="food-title">Лимонад</div>
-<div class="price">500</div>
-<button onclick="order('Лимонад',500)">Заказать</button>
-</div>
-</div>
-
-</div>
-</section>
-
-<!-- О нас -->
-<section class="about" id="about">
-<h2>О нас</h2>
-<p>FoodExpress — это сервис быстрой доставки еды в вашем городе. Мы доставляем горячие и свежие блюда прямо к вашей двери за считанные минуты. Наша миссия — сделать вкусную еду доступной каждому!</p>
-</section>
-
-<!-- Контакты -->
-<section class="contact" id="contact">
-<h2>Связаться с нами</h2>
-<p>Instagram: <a href="https://instagram.com/foodexpress" target="_blank" style="color:#ff6b00;">@foodexpress</a></p>
-<p>Телефон: +7 777 123 45 67</p>
-<p>Email: info@foodexpress.kz</p>
-</section>
-
-<footer class="footer">
-© 2026 FoodExpress
-</footer>
-
-<script>
-let cart = [];
-function order(food, price){
-    cart.push({name: food, price: price});
-    updateCart();
-}
-function updateCart(){
-    let total = 0;
-    cart.forEach(item => total += item.price);
-    document.getElementById("cart-count").innerText = cart.length;
-    document.getElementById("cart-total").innerText = total + " ₸";
-}
-function filterFood(category){
-    let cards = document.querySelectorAll(".card");
-    cards.forEach(card=>{
-        if(category==='all' || card.dataset.category===category){
-            card.style.display='block';
-        }else{
-            card.style.display='none';
-        }
-    });
-}
-</script>
-
-</body>
-</html><!DOCTYPE html>
-<html lang="ru">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FoodExpress - Доставка еды</title>
 
 <style>
-body{
-    margin:0;
-    font-family: Arial, sans-serif;
-    background:#0f0f0f;
-    color:white;
+
+html{
+scroll-behavior:smooth;
 }
 
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#0f0f0f;
+color:white;
+}
+
+/* HEADER */
+
 header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:20px 40px;
-    background:#151515;
-    flex-wrap: wrap;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 40px;
+background:#151515;
+position:sticky;
+top:0;
+z-index:1000;
 }
 
 .logo{
-    font-size:24px;
-    font-weight:bold;
-    color:#ff6b00;
-}
-
-nav{
-    display:flex;
-    align-items:center;
+font-size:24px;
+font-weight:bold;
+color:#ff6b00;
 }
 
 nav a{
-    margin-left:20px;
-    text-decoration:none;
-    color:white;
-    opacity:0.8;
+margin-left:20px;
+text-decoration:none;
+color:white;
+opacity:0.8;
 }
 
 nav a:hover{
-    opacity:1;
+opacity:1;
 }
 
 .cart{
-    background:#1c1c1c;
-    padding:8px 15px;
-    border-radius:20px;
-    font-size:14px;
-    margin-left:20px;
+background:#1c1c1c;
+padding:8px 15px;
+border-radius:20px;
+font-size:14px;
 }
 
+/* HERO */
+
 .hero{
-    text-align:center;
-    padding:80px 20px;
-    background:linear-gradient(120deg,#ff6b00,#ff2d55);
+position:relative;
+height:550px;
+display:flex;
+align-items:center;
+justify-content:center;
+background:#0f0f0f;
+overflow:hidden;
+}
+
+.hero-content{
+position:relative;
+z-index:1;
+text-align:center;
 }
 
 .hero h1{
-    font-size:42px;
-    margin-bottom:10px;
+font-size:80px;
+opacity:0.12;
+letter-spacing:4px;
 }
 
 .hero p{
-    opacity:0.9;
-    font-size:18px;
+font-size:20px;
+max-width:600px;
+margin:auto;
+opacity:0.85;
 }
 
+.hero-burger{
+position:absolute;
+width:420px;
+right:10%;
+bottom:-20px;
+z-index:5;
+filter:drop-shadow(0 40px 50px rgba(0,0,0,0.9));
+transition:transform 0.6s;
+}
+
+.hero:hover .hero-burger{
+transform:translateY(-20px) scale(1.05);
+}
+
+/* MENU */
+
 .menu{
-    padding:60px 40px;
+padding:80px 40px;
 }
 
 .menu h2{
-    text-align:center;
-    margin-bottom:20px;
+text-align:center;
+margin-bottom:20px;
 }
 
 .categories{
-    text-align:center;
-    margin-bottom:30px;
+text-align:center;
+margin-bottom:40px;
 }
 
 .categories button{
-    margin:5px;
-    padding:10px 20px;
-    border:none;
-    border-radius:20px;
-    background:#1c1c1c;
-    color:white;
-    cursor:pointer;
+margin:6px;
+padding:10px 20px;
+border:none;
+border-radius:20px;
+background:#1c1c1c;
+color:white;
+cursor:pointer;
 }
 
 .categories button:hover{
-    background:#ff6b00;
+background:#ff6b00;
 }
+
+/* GRID */
 
 .food-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:25px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+gap:25px;
 }
+
+/* CARD */
 
 .card{
-    background:#1c1c1c;
-    border-radius:15px;
-    overflow:hidden;
-    transition:0.3s;
-}
-
-.card:hover{
-    transform:translateY(-8px);
-    box-shadow:0 10px 25px rgba(0,0,0,0.5);
+background:#1c1c1c;
+border-radius:18px;
+overflow:hidden;
+transition:0.35s;
 }
 
 .card img{
-    width:100%;
-    height:160px;
-    object-fit:cover;
+width:100%;
+height:180px;
+object-fit:cover;
+filter:brightness(0.9) contrast(1.1);
+}
+
+.card:hover{
+transform:translateY(-10px) scale(1.02);
+box-shadow:0 20px 40px rgba(0,0,0,0.7);
 }
 
 .card-body{
-    padding:15px;
+padding:15px;
 }
 
 .food-title{
-    font-size:18px;
-    margin-bottom:10px;
+font-size:18px;
+margin-bottom:10px;
 }
 
 .price{
-    color:#ff6b00;
-    font-weight:bold;
+color:#ff6b00;
+font-weight:bold;
 }
 
 button{
-    margin-top:10px;
-    width:100%;
-    padding:10px;
-    border:none;
-    border-radius:8px;
-    background:#ff6b00;
-    color:white;
-    cursor:pointer;
+margin-top:10px;
+width:100%;
+padding:10px;
+border:none;
+border-radius:8px;
+background:#ff6b00;
+color:white;
+cursor:pointer;
 }
 
 button:hover{
-    background:#ff8c2f;
+background:#ff8c2f;
 }
 
-.about, .contact{
-    padding:60px 40px;
-    text-align:center;
+/* ABOUT */
+
+.about{
+padding:100px 40px;
+text-align:center;
+background:linear-gradient(120deg,#ff6b00,#ff2d55);
 }
 
-.about h2, .contact h2{
-    margin-bottom:20px;
+.about h2{
+font-size:40px;
+}
+
+.about p{
+max-width:700px;
+margin:auto;
+margin-top:20px;
+font-size:18px;
+line-height:1.6;
+}
+
+/* CONTACT */
+
+.contact{
+padding:80px 40px;
+text-align:center;
+background:#151515;
+}
+
+.contact p{
+font-size:18px;
+margin:10px 0;
+}
+
+.contact a{
+color:#ff6b00;
+text-decoration:none;
 }
 
 footer{
-    text-align:center;
-    padding:20px;
-    background:#151515;
-    margin-top:40px;
+text-align:center;
+padding:20px;
+background:#151515;
 }
 
-/* Адаптив */
-@media(max-width:600px){
-    header{
-        flex-direction:column;
-        align-items:flex-start;
-    }
-    nav{
-        margin-top:10px;
-        flex-wrap:wrap;
-    }
-    .cart{
-        margin-left:0;
-        margin-top:10px;
-    }
-}
 </style>
 </head>
+
 <body>
 
 <header>
+
 <div class="logo">FoodExpress</div>
 
 <nav>
@@ -509,108 +250,193 @@ footer{
 <div class="cart">
 🛒 <span id="cart-count">0</span> | <span id="cart-total">0 ₸</span>
 </div>
+
 </header>
 
+<!-- HERO -->
+
 <section class="hero">
-<h1>Быстрая доставка еды</h1>
-<p>Горячая еда прямо к вашей двери</p>
+
+<div class="hero-content">
+
+<h1>KING BURGER</h1>
+
+<p>
+Сочная говяжья котлета 180г, плавленый сыр чеддер,
+свежий салат, томаты, карамелизированный лук
+и фирменный соус FoodExpress.
+</p>
+
+</div>
+
+<img class="hero-burger"
+src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092">
+
 </section>
 
+<!-- MENU -->
+
 <section class="menu" id="menu">
-<h2>Популярные блюда</h2>
+
+<h2>Наше меню</h2>
 
 <div class="categories">
+
 <button onclick="filterFood('all')">Все</button>
-<button onclick="filterFood('pizza')">Пицца</button>
 <button onclick="filterFood('burger')">Бургеры</button>
+<button onclick="filterFood('pizza')">Пицца</button>
 <button onclick="filterFood('sushi')">Суши</button>
 <button onclick="filterFood('drink')">Напитки</button>
+
 </div>
 
 <div class="food-grid">
 
 <div class="card" data-category="burger">
-<img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092">
+<img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd">
 <div class="card-body">
-<div class="food-title">Бургер</div>
-<div class="price">1500</div>
-<button onclick="order('Бургер',1500)">Заказать</button>
+<div class="food-title">King Beef</div>
+<div class="price">1500 ₸</div>
+<button onclick="order('King Beef',1500)">Заказать</button>
+</div>
+</div>
+
+<div class="card" data-category="burger">
+<img src="https://images.unsplash.com/photo-1550547660-d9450f859349">
+<div class="card-body">
+<div class="food-title">Cheese Burger</div>
+<div class="price">1600 ₸</div>
+<button onclick="order('Cheese Burger',1600)">Заказать</button>
 </div>
 </div>
 
 <div class="card" data-category="pizza">
 <img src="https://images.unsplash.com/photo-1594007654729-407eedc4be65">
 <div class="card-body">
-<div class="food-title">Пицца</div>
-<div class="price">2500</div>
-<button onclick="order('Пицца',2500)">Заказать</button>
+<div class="food-title">Маргарита</div>
+<div class="price">2500 ₸</div>
+<button onclick="order('Маргарита',2500)">Заказать</button>
+</div>
+</div>
+
+<div class="card" data-category="pizza">
+<img src="https://images.unsplash.com/photo-1601924638867-3ec2c8ddc4d4">
+<div class="card-body">
+<div class="food-title">Пепперони</div>
+<div class="price">2700 ₸</div>
+<button onclick="order('Пепперони',2700)">Заказать</button>
 </div>
 </div>
 
 <div class="card" data-category="sushi">
-<img src="https://images.unsplash.com/photo-1617196035154-1e7e6e28b0db?w=500&auto=format&fit=crop&q=60">
+<img src="https://images.unsplash.com/photo-1553621042-f6e147245754">
 <div class="card-body">
-<div class="food-title">Суши</div>
-<div class="price">3000</div>
-<button onclick="order('Суши',3000)">Заказать</button>
+<div class="food-title">Филадельфия</div>
+<div class="price">3000 ₸</div>
+<button onclick="order('Филадельфия',3000)">Заказать</button>
+</div>
+</div>
+
+<div class="card" data-category="sushi">
+<img src="https://images.unsplash.com/photo-1611143669185-af224c5e3252">
+<div class="card-body">
+<div class="food-title">Калифорния</div>
+<div class="price">3200 ₸</div>
+<button onclick="order('Калифорния',3200)">Заказать</button>
 </div>
 </div>
 
 <div class="card" data-category="drink">
-<img src="https://images.unsplash.com/photo-1659046842567-2787b5c9c2fe?w=500&auto=format&fit=crop&q=60">
+<img src="https://images.unsplash.com/photo-1527169402691-a2d8a4d7f4d6">
 <div class="card-body">
 <div class="food-title">Мохито</div>
-<div class="price">800</div>
+<div class="price">800 ₸</div>
 <button onclick="order('Мохито',800)">Заказать</button>
 </div>
 </div>
 
+<div class="card" data-category="drink">
+<img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93">
+<div class="card-body">
+<div class="food-title">Лимонад</div>
+<div class="price">500 ₸</div>
+<button onclick="order('Лимонад',500)">Заказать</button>
 </div>
+</div>
+
+</div>
+
 </section>
+
+<!-- ABOUT -->
 
 <section class="about" id="about">
+
 <h2>О нас</h2>
-<p>FoodExpress — это сервис быстрой доставки еды в вашем городе. Мы доставляем горячие и свежие блюда прямо к вашей двери за считанные минуты. Наша миссия — сделать вкусную еду доступной каждому!</p>
+
+<p>
+FoodExpress — современный сервис доставки еды.
+Мы готовим из свежих продуктов и доставляем
+горячую еду прямо к вашей двери за 30 минут.
+Наши бургеры, пицца и суши готовят профессиональные повара.
+</p>
+
 </section>
 
+<!-- CONTACT -->
+
 <section class="contact" id="contact">
-<h2>Контакты</h2>
-<p>Email: info@foodexpress.kz</p>
+
+<h2>Связаться с нами</h2>
+
+<p>Instagram: <a href="#">@foodexpress</a></p>
 <p>Телефон: +7 707 167 1932</p>
-<p>Адрес: ул. Иляева 423, Шымкент</p>
+<p>Email: info@foodexpress.kz</p>
+
 </section>
 
 <footer>
+
 © 2026 FoodExpress
+
 </footer>
 
 <script>
-// корзина
-let cart = [];
 
-function order(food, price){
-    cart.push({name: food, price: price});
-    updateCart();
+let cart=[];
+
+function order(food,price){
+cart.push({name:food,price:price});
+updateCart();
 }
 
 function updateCart(){
-    let total = 0;
-    cart.forEach(item => total += item.price);
-    document.getElementById("cart-count").innerText = cart.length;
-    document.getElementById("cart-total").innerText = total + " ₸";
+
+let total=0;
+
+cart.forEach(item=>total+=item.price);
+
+document.getElementById("cart-count").innerText=cart.length;
+document.getElementById("cart-total").innerText=total+" ₸";
+
 }
 
-// фильтр по категориям
 function filterFood(category){
-    let cards = document.querySelectorAll(".card");
-    cards.forEach(card=>{
-        if(category==='all' || card.dataset.category===category){
-            card.style.display='block';
-        }else{
-            card.style.display='none';
-        }
-    });
+
+let cards=document.querySelectorAll(".card");
+
+cards.forEach(card=>{
+
+if(category==="all" || card.dataset.category===category){
+card.style.display="block";
+}else{
+card.style.display="none";
 }
+
+});
+
+}
+
 </script>
 
 </body>
